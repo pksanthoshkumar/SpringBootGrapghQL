@@ -1,6 +1,7 @@
 package com.accounts.service;
 
 import com.accounts.domain.BankAccount;
+import com.accounts.exceptions.AccountNotFountException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,12 @@ public class BankService {
         return account;
     }
 
-    public Optional<BankAccount> getAccounts(Integer accountId) {
-        return  bankAccounts.stream().filter(a->a.getId().equals(accountId)).findFirst();
+    public BankAccount getAccounts(Integer accountId) {
+        Optional <BankAccount> account = bankAccounts.stream().filter(a -> a.getId().equals(accountId)).findFirst();
+        if (account.isPresent())
+            return account.get();
+        else {
+            throw new AccountNotFountException("Account Not found");
+        }
     }
 }

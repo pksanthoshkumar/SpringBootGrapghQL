@@ -29,7 +29,7 @@ public class AccountsController {
     }
 
     @QueryMapping
-    Optional<BankAccount> accountsById (@Argument("accountId")  Integer accountId){
+    BankAccount accountsById (@Argument("accountId")  Integer accountId){
         log.info("Getting Accounts ");
         return bankService.getAccounts(accountId);
     }

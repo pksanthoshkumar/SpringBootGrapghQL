@@ -1,10 +1,10 @@
 scalar CountryCode
 
 input ClientInput {
-    firstName: String
+    firstName: String!
     middleName: String
-    lastName: String
-    country: CountryCode
+    lastName: String!
+    country: CountryCode!
 }
 
 type ClientType {
