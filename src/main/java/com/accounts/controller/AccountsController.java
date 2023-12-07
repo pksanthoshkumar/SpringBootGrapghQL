@@ -1,51 +1,28 @@
 package com.accounts.controller;
 
-import com.accounts.domain.BankAccount;
-import com.accounts.domain.Client;
+import com.accounts.domain.AccountConnection;
+import com.accounts.domain.CursorInfo;
 import com.accounts.service.BankService;
-import com.accounts.service.ClientService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.graphql.data.method.annotation.Argument;
 import org.springframework.graphql.data.method.annotation.QueryMapping;
-import org.springframework.graphql.data.method.annotation.SchemaMapping;
 import org.springframework.stereotype.Controller;
 
-import java.util.List;
-
 @Controller
-@Slf4j
+@RequiredArgsConstructor
 public class AccountsController {
 
-    @Autowired
-    BankService bankService;
+    private final BankService bankService;
 
-    @Autowired
-    ClientService clientService;
-    @QueryMapping
-    List<BankAccount> accounts (){
-        log.info("Getting Accounts ");
-        return bankService.getAccounts();
-    }
-
-    @SchemaMapping (typeName = "BankAccount", field = "client")
-    Client getClient (BankAccount account) {
-        log.info("Getting client for " + account.getId());
-        return clientService.getClientByAccountId(account.getId());
+    @QueryMapping()
+    public AccountConnection accountsByPage(
+            @Argument("first") Integer first,
+            @Argument("after") String after,
+            @Argument("last") Integer last,
+            @Argument("before") String before) {
+        return bankService.getAccountConnection(new CursorInfo(first, after, last, before));
     }
 }
 
-/*
-query  {
-  accounts {
-    id
-    currency
-    balance
-    status
-    client{
-      id
-      firstName
-      lastName
-    }
-  }
-}
- */

@@ -1,17 +1,17 @@
 package com.accounts.domain;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-@AllArgsConstructor
-@Data
-public class BankAccount {
-    private  String id;
-    private String clientId;
-    private Currency currency;
-    private Float balance;
-    private String status;
-}
+public record  BankAccount (
+    Integer id,
+    Float balance,
+    String status,
+    Float transferLimit,
+    String accountCreateDate
+    ) {}

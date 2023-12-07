@@ -1,3 +1,28 @@
 type Query {
-    accounts: [BankAccount]
+    accountsByPage (first: Int, after: String, last: Int, before: String): AccountConnection
+}
+
+type AccountConnection {
+    edges: [AccountEdge]
+    pageInfo: AccountInfo!
+}
+
+type AccountInfo {
+    startCursor: String
+    endCursor: String
+    hasNextPage: Boolean!
+    hasPreviousPage: Boolean!
+}
+
+type AccountEdge {
+    cursor: String
+    node: BankAccount!
+}
+
+type BankAccount {
+    id: ID
+    balance: Float
+    status: String
+    transferLimit: Float
+    accountCreateDate: String
 }
