@@ -26,3 +26,19 @@ public class AccountsController {
     }
 }
 
+/*
+query  {
+   accountsByPage(last:20,before:"MjA=") {
+     edges {
+       node {
+         id
+        id, balance, status, transferLimit, accountCreateDate
+       }
+     }
+    pageInfo {
+      startCursor
+      endCursor
+    }
+   }
+}
+ */
